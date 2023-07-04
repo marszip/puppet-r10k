@@ -58,6 +58,15 @@ class r10k::params {
     }
   }
 
+  case $facts['os']['family'] {
+    'RedHat': {
+      $package_url = "https://github.com/voxpupuli/webhook-go/releases/download/v${r10k::webhook::version}/webhook-go_${r10k::webhook::version}_linux_amd64.rpm"
+    }
+    'Debian', 'Ubuntu': {
+      $package_url = "https://github.com/voxpupuli/webhook-go/releases/download/v${r10k::webhook::version}/webhook-go_${r10k::webhook::version}_linux_amd64.deb"
+    }
+  }
+
   # We check for the function right now instead of $::pe_server_version
   # which does not get populated on agent nodes as some users use r10k
   # with razor see https://github.com/acidprime/r10k/pull/219
